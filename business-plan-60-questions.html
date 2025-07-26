@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Plan - 60 Questions Essentielles</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .question-section {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        
+        .section-header {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        
+        .section-header:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .section-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-content {
+            display: none;
+            padding: 0 20px 20px;
+        }
+        
+        .section-content.active {
+            display: block;
+        }
+        
+        .question-item {
+            background: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .question-text {
+            font-weight: 500;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .question-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        .question-input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        .progress-container {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #2980b9);
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        .export-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .export-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .export-btn.primary {
+            background: #27ae60;
+            color: white;
+        }
+        
+        .export-btn.primary:hover {
+            background: #229954;
+        }
+        
+        .chevron {
+            transition: transform 0.3s;
+        }
+        
+        .chevron.rotated {
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-chart-line"></i>
+                <h1>Business Plan - 60 Questions Essentielles</h1>
+            </div>
+            <p class="subtitle">Formulaire complet pour élaborer un business plan solide et convaincant</p>
+            <div class="tools-menu">
+                <a href="index.html" class="tool-link">
+                    <i class="fas fa-arrow-left"></i>
+                    Retour au Business Plan Simple
+                </a>
+                <a href="modele-financier.html" class="tool-link">
+                    <i class="fas fa-calculator"></i>
+                    Modèle Financier
+                </a>
+            </div>
+        </header>
+
+        <div class="progress-container">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                <span>Progression</span>
+                <span id="progress-text">0% complété</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <main class="main-content">
+            <div id="sections-container"></div>
+            
+            <div class="export-buttons">
+                <button class="export-btn primary" onclick="exportData()">
+                    <i class="fas fa-download"></i> Exporter les réponses
+                </button>
+                <button class="export-btn" onclick="saveData()" style="background: #3498db; color: white;">
+                    <i class="fas fa-save"></i> Sauvegarder
+                </button>
+                <button class="export-btn" onclick="resetForm()" style="background: #e74c3c; color: white;">
+                    <i class="fas fa-redo"></i> Recommencer
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const sections = [
+            {
+                title: "🎯 CONNAÎTRE SON MARCHÉ",
+                color: "#3498db",
+                questions: [
+                    { id: 1, text: "Quelle est la taille du marché ? Est-il local, national, mondial ?", type: "textarea" },
+                    { id: 2, text: "Combien de clients espérer ?", type: "number" },
+                    { id: 3, text: "Sur ce marché, y a-t-il pénurie ou excès d'offre ?", type: "select", options: ["Pénurie", "Équilibre", "Excès d'offre"] },
+                    { id: 4, text: "De nouveaux acteurs peuvent-ils apparaître à brève échéance ?", type: "select", options: ["Oui", "Non", "Incertain"] },
+                    { id: 5, text: "L'activité est-elle B to B ou B to C ?", type: "select", options: ["B to B", "B to C", "Les deux"] },
+                    { id: 6, text: "L'offre est-elle en phase avec les attentes du marché ?", type: "textarea" },
+                    { id: 7, text: "Quels sont les critères d'achat des clients ? Sont-ils loyaux et captifs ?", type: "textarea" },
+                    { id: 8, text: "Quels sont les bénéfices clients du produit ou service ?", type: "textarea" },
+                    { id: 9, text: "Y a-t-il une concurrence, frontale ou partielle, avec une offre existante ?", type: "textarea" },
+                    { id: 10, text: "Est-il facile de se différencier et trouver une position de 'niche' ?", type: "textarea" },
+                    { id: 11, text: "Combien d'années d'expérience du secteur faut-il pour être crédible auprès des clients ?", type: "number" },
+                    { id: 12, text: "Qui sont les concurrents ?", type: "textarea" },
+                    { id: 13, text: "Votre savoir-faire vous donne-t-il un réel avantage ?", type: "textarea" },
+                    { id: 14, text: "Où se crée la valeur ajoutée dans la filière ?", type: "textarea" },
+                    { id: 15, text: "Quel est le poids des différents acteurs (clients, fournisseurs, sous-traitants, autorités réglementaires...) ?", type: "textarea" },
+                    { id: 16, text: "Comment évoluent les prix ?", type: "textarea" },
+                    { id: 17, text: "Les changements réglementaires et les normes risquent-ils de rendre plus complexes et plus coûteux le démarrage et l'exercice de votre activité ?", type: "textarea" },
+                    { id: 18, text: "Qui sont les fournisseurs ? Sont-ils nombreux ? Concentrés ?", type: "textarea" },
+                    { id: 19, text: "Est-il facile d'en changer ?", type: "select", options: ["Très facile", "Facile", "Difficile", "Très difficile"] },
+                    { id: 20, text: "Auront-ils un pouvoir d'influence sur la qualité et le coût de votre offre ?", type: "textarea" }
+                ]
+            },
+            {
+                title: "👥 AVOIR LE PROFIL ADAPTÉ ET LE SOUTIEN DE SES PROCHES",
+                color: "#27ae60",
+                questions: [
+                    { id: 21, text: "Avez-vous déjà dirigé une entreprise ou un centre de profit ?", type: "select", options: ["Oui", "Non"] },
+                    { id: 22, text: "Êtes-vous formé au management ?", type: "select", options: ["Oui", "Non", "Partiellement"] },
+                    { id: 23, text: "Votre environnement familial peut-il faciliter la réalisation de votre projet ? Avez-vous le soutien de votre conjoint ?", type: "textarea" },
+                    { id: 24, text: "Combien de contacts 'activables' contient votre carnet d'adresses professionnel et personnel ?", type: "number" },
+                    { id: 25, text: "Connaissez-vous une personne avec qui vous pouvez faire régulièrement le point sur l'avancement de votre projet ?", type: "select", options: ["Oui", "Non"] },
+                    { id: 26, text: "Avez-vous rencontré une association de créateurs et d'accompagnement ?", type: "select", options: ["Oui", "Non", "En cours"] },
+                    { id: 27, text: "Êtes-vous prêt à faire des sacrifices financiers par rapport à votre rémunération actuelle ?", type: "textarea" },
+                    { id: 28, text: "Quels seront vos besoins financiers dans les prochaines années (emprunts, scolarité des enfants...) ?", type: "textarea" }
+                ]
+            },
+            {
+                title: "🤝 FORMER UNE ÉQUIPE",
+                color: "#9b59b6",
+                questions: [
+                    { id: 29, text: "Pouvez-vous vous appuyer sur une équipe 'soudée', complémentaire, expérimentée ?", type: "textarea" },
+                    { id: 30, text: "Les compétences clés pour la réussite de votre projet y sont-elles représentées ?", type: "textarea" },
+                    { id: 31, text: "À défaut, pouvez-vous compter sur des partenaires extérieurs ?", type: "textarea" },
+                    { id: 32, text: "Vos objectifs sont-ils compris et partagés par tous ?", type: "select", options: ["Oui", "Non", "Partiellement"] },
+                    { id: 33, text: "Avez-vous prévu et organisé la fidélisation de vos 'hommes clés' ?", type: "textarea" }
+                ]
+            },
+            {
+                title: "📈 BLINDER SA STRATÉGIE MARKETING ET COMMERCIALE",
+                color: "#f39c12",
+                questions: [
+                    { id: 34, text: "Savez-vous à quels types de clients vous allez vous adresser ?", type: "textarea" },
+                    { id: 35, text: "Votre marché est-il segmenté ?", type: "select", options: ["Oui", "Non"] },
+                    { id: 36, text: "Avez-vous défini des cibles prioritaires ?", type: "textarea" },
+                    { id: 37, text: "Ferez-vous face à un réseau de prescripteurs actifs ?", type: "textarea" },
+                    { id: 38, text: "Quels sont les moyens commerciaux à mettre en œuvre pour atteindre votre objectif de chiffre d'affaires ?", type: "textarea" },
+                    { id: 39, text: "Votre processus de commercialisation est-il défini ?", type: "textarea" },
+                    { id: 40, text: "Comment allez-vous organiser votre force de vente ?", type: "textarea" },
+                    { id: 41, text: "Avez-vous prévu un système de prévision et de reporting ?", type: "select", options: ["Oui", "Non", "En cours"] },
+                    { id: 42, text: "Vous faut-il une fonction marketing ?", type: "select", options: ["Oui", "Non", "À déterminer"] },
+                    { id: 43, text: "Avez-vous chiffré votre budget de communication ?", type: "text" },
+                    { id: 44, text: "De quels outils de communication disposez-vous ?", type: "textarea" }
+                ]
+            },
+            {
+                title: "🔒 PROTÉGER SON SAVOIR-FAIRE ET PRODUIT",
+                color: "#e74c3c",
+                questions: [
+                    { id: 45, text: "Votre savoir-faire technologique peut-il faire l'objet d'une protection juridique ?", type: "textarea" },
+                    { id: 46, text: "Votre solution peut-elle s'imposer comme un standard dans le secteur ?", type: "textarea" },
+                    { id: 47, text: "Allez-vous devoir convaincre d'autres acteurs technologiques ?", type: "textarea" },
+                    { id: 48, text: "Votre innovation risque-t-elle d'être rapidement dépassée ?", type: "textarea" },
+                    { id: 49, text: "Avez-vous chiffré vos besoins de recherche-développement ?", type: "text" },
+                    { id: 50, text: "Votre outil de production de départ sera-t-il suffisamment 'calibré' ?", type: "textarea" },
+                    { id: 51, text: "Savez-vous arbitrer entre production interne et sous-traitance ?", type: "textarea" }
+                ]
+            },
+            {
+                title: "💰 TROUVER DES FINANCEMENTS",
+                color: "#f1c40f",
+                questions: [
+                    { id: 52, text: "Quel est votre besoin financier global ?", type: "text" },
+                    { id: 53, text: "Avec quelle répartition entre capitaux propres et endettement ?", type: "textarea" },
+                    { id: 54, text: "Votre business est-il générateur ou consommateur de cash ?", type: "select", options: ["Générateur", "Consommateur", "Équilibré"] },
+                    { id: 55, text: "Quels seront vos besoins de trésorerie en première année d'activité ?", type: "text" },
+                    { id: 56, text: "Quel sera le délai d'encaissement des clients ? Pourrez-vous obtenir des fournisseurs des délais de paiement ?", type: "textarea" },
+                    { id: 57, text: "Au bout de combien de mois vos flux de trésorerie seront-ils, de manière récurrente, positifs ?", type: "number" },
+                    { id: 58, text: "Quel est le montant prévisionnel de votre besoin de financement cumulé avant d'atteindre le point mort en trésorerie ?", type: "text" },
+                    { id: 59, text: "Quand pensez-vous atteindre le seuil de rentabilité ?", type: "text" },
+                    { id: 60, text: "La rentabilité dégagée à l'horizon de trois à cinq ans est-elle suffisante ?", type: "textarea" }
+                ]
+            }
+        ];
+
+        let formData = {};
+        let expandedSections = {};
+
+        function initializeForm() {
+            const container = document.getElementById('sections-container');
+            
+            sections.forEach((section, sectionIndex) => {
+                const sectionDiv = document.createElement('div');
+                sectionDiv.className = 'question-section';
+                sectionDiv.style.borderLeft = `4px solid ${section.color}`;
+                
+                const headerDiv = document.createElement('div');
+                headerDiv.className = 'section-header';
+                headerDiv.onclick = () => toggleSection(sectionIndex);
+                
+                headerDiv.innerHTML = `
+                    <div class="section-title">
+                        ${section.title}
+                        <span style="font-size: 0.8em; color: #666;">(${section.questions.length} questions)</span>
+                    </div>
+                    <i class="fas fa-chevron-right chevron" id="chevron-${sectionIndex}"></i>
+                `;
+                
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'section-content';
+                contentDiv.id = `section-${sectionIndex}`;
+                
+                section.questions.forEach(question => {
+                    const questionDiv = document.createElement('div');
+                    questionDiv.className = 'question-item';
+                    
+                    const questionText = document.createElement('div');
+                    questionText.className = 'question-text';
+                    questionText.innerHTML = `<strong>Q${question.id}.</strong> ${question.text}`;
+                    
+                    const inputElement = createInputElement(question);
+                    
+                    questionDiv.appendChild(questionText);
+                    questionDiv.appendChild(inputElement);
+                    contentDiv.appendChild(questionDiv);
+                });
+                
+                sectionDiv.appendChild(headerDiv);
+                sectionDiv.appendChild(contentDiv);
+                container.appendChild(sectionDiv);
+            });
+            
+            loadSavedData();
+            updateProgress();
+        }
+
+        function createInputElement(question) {
+            let input;
+            
+            switch (question.type) {
+                case 'textarea':
+                    input = document.createElement('textarea');
+                    input.rows = 3;
+                    input.placeholder = 'Votre réponse...';
+                    break;
+                case 'select':
+                    input = document.createElement('select');
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.textContent = 'Sélectionnez une option';
+                    input.appendChild(defaultOption);
+                    
+                    question.options.forEach(option => {
+                        const optionElement = document.createElement('option');
+                        optionElement.value = option;
+                        optionElement.textContent = option;
+                        input.appendChild(optionElement);
+                    });
+                    break;
+                case 'number':
+                    input = document.createElement('input');
+                    input.type = 'number';
+                    input.placeholder = 'Entrez un nombre';
+                    break;
+                default:
+                    input = document.createElement('input');
+                    input.type = 'text';
+                    input.placeholder = 'Votre réponse...';
+            }
+            
+            input.className = 'question-input';
+            input.id = `question-${question.id}`;
+            input.addEventListener('input', () => {
+                formData[question.id] = input.value;
+                saveToLocalStorage();
+                updateProgress();
+            });
+            
+            return input;
+        }
+
+        function toggleSection(sectionIndex) {
+            const content = document.getElementById(`section-${sectionIndex}`);
+            const chevron = document.getElementById(`chevron-${sectionIndex}`);
+            
+            if (expandedSections[sectionIndex]) {
+                content.classList.remove('active');
+                chevron.classList.remove('rotated');
+                expandedSections[sectionIndex] = false;
+            } else {
+                content.classList.add('active');
+                chevron.classList.add('rotated');
+                expandedSections[sectionIndex] = true;
+            }
+        }
+
+        function updateProgress() {
+            const totalQuestions = sections.reduce((sum, section) => sum + section.questions.length, 0);
+            const answeredQuestions = Object.keys(formData).filter(key => 
+                formData[key] && formData[key].toString().trim() !== ''
+            ).length;
+            
+            const percentage = Math.round((answeredQuestions / totalQuestions) * 100);
+            
+            document.getElementById('progress-fill').style.width = `${percentage}%`;
+            document.getElementById('progress-text').textContent = `${percentage}% complété (${answeredQuestions}/${totalQuestions})`;
+        }
+
+        function saveToLocalStorage() {
+            localStorage.setItem('businessPlan60Questions', JSON.stringify(formData));
+        }
+
+        function loadSavedData() {
+            const saved = localStorage.getItem('businessPlan60Questions');
+            if (saved) {
+                formData = JSON.parse(saved);
+                
+                Object.keys(formData).forEach(questionId => {
+                    const input = document.getElementById(`question-${questionId}`);
+                    if (input) {
+                        input.value = formData[questionId];
+                    }
+                });
+            }
+        }
+
+        function exportData() {
+            const dataStr = JSON.stringify(formData, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            const exportFileDefaultName = 'business_plan_60_questions.json';
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+        }
+
+        function saveData() {
+            saveToLocalStorage();
+            alert('Données sauvegardées avec succès !');
+        }
+
+        function resetForm() {
+            if (confirm('Êtes-vous sûr de vouloir recommencer ? Toutes les données seront perdues.')) {
+                formData = {};
+                localStorage.removeItem('businessPlan60Questions');
+                
+                document.querySelectorAll('.question-input').forEach(input => {
+                    input.value = '';
+                });
+                
+                updateProgress();
+                alert('Formulaire réinitialisé');
+            }
+        }
+
+        // Initialiser le formulaire au chargement de la page
+        document.addEventListener('DOMContentLoaded', initializeForm);
+    </script>
+</body>
+</html>

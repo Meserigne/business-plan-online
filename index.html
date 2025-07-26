@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Plan Online - Créateur de Plan d'Affaires</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-chart-line"></i>
+                <h1>Business Plan Online</h1>
+            </div>
+            <p class="subtitle">Créez votre plan d'affaires étape par étape</p>
+            <div class="point-essentiel">
+                <p><strong>Point essentiel :</strong> Doit permettre de convaincre ses partenaires</p>
+                <small>Pour créer une activité, il faut du cash. Pour en trouver, il vous faudra convaincre le banquier ou des investisseurs en leur présentant un business plan crédible.</small>
+            </div>
+            <div class="tools-menu">
+                <a href="business-plan-60-questions.html" class="tool-link">
+                    <i class="fas fa-list-alt"></i>
+                    Business Plan Complet (60 Questions)
+                </a>
+                <a href="modele-financier.html" class="tool-link">
+                    <i class="fas fa-calculator"></i>
+                    Modèle Financier
+                </a>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Dashboard Analytics -->
+            <div class="dashboard-container">
+                <div class="dashboard-header">
+                    <h2><i class="fas fa-chart-line"></i> Tableau de Bord Business Plan</h2>
+                    <p>Analyse complète et synthèse de votre projet d'entreprise</p>
+                </div>
+
+                <!-- KPI Cards -->
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-icon"><i class="fas fa-users"></i></div>
+                        <div class="kpi-content">
+                            <h3>Clients Cibles</h3>
+                            <div class="kpi-value" id="kpi-clients">-</div>
+                            <div class="kpi-label">Marché identifié</div>
+                        </div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon"><i class="fas fa-euro-sign"></i></div>
+                        <div class="kpi-content">
+                            <h3>CA Prévisionnel</h3>
+                            <div class="kpi-value" id="kpi-revenue">-</div>
+                            <div class="kpi-label">5 ans cumulé</div>
+                        </div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon"><i class="fas fa-chart-pie"></i></div>
+                        <div class="kpi-content">
+                            <h3>Rentabilité</h3>
+                            <div class="kpi-value" id="kpi-profitability">-</div>
+                            <div class="kpi-label">Marge moyenne</div>
+                        </div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon"><i class="fas fa-calendar-alt"></i></div>
+                        <div class="kpi-content">
+                            <h3>Point Mort</h3>
+                            <div class="kpi-value" id="kpi-breakeven">-</div>
+                            <div class="kpi-label">Seuil de rentabilité</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="charts-section">
+                    <div class="chart-container">
+                        <h3><i class="fas fa-line-chart"></i> Évolution du Chiffre d'Affaires</h3>
+                        <canvas id="revenueChart" width="400" height="200"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3><i class="fas fa-pie-chart"></i> Répartition des Coûts</h3>
+                        <canvas id="costsChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+
+                <!-- Business Plan Summary -->
+                <div class="business-plan-summary">
+                    <h3><i class="fas fa-file-alt"></i> Synthèse du Business Plan</h3>
+                    <div class="summary-grid">
+                        <div class="summary-section">
+                            <h4>🎯 Analyse du Marché</h4>
+                            <div id="market-analysis">
+                                <p>Complétez votre <a href="business-plan-60-questions.html">Business Plan Complet</a> pour voir l'analyse détaillée.</p>
+                            </div>
+                        </div>
+                        <div class="summary-section">
+                            <h4>💰 Projections Financières</h4>
+                            <div id="financial-projections">
+                                <p>Utilisez le <a href="modele-financier.html">Modèle Financier</a> pour générer vos projections.</p>
+                            </div>
+                        </div>
+                        <div class="summary-section">
+                            <h4>🏆 Avantages Concurrentiels</h4>
+                            <div id="competitive-advantages">
+                                <p>Définissez vos avantages dans le formulaire détaillé.</p>
+                            </div>
+                        </div>
+                        <div class="summary-section">
+                            <h4>📈 Stratégie de Croissance</h4>
+                            <div id="growth-strategy">
+                                <p>Élaborez votre stratégie avec nos outils d'analyse.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Risk Analysis -->
+                <div class="risk-analysis">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Analyse des Risques</h3>
+                    <div class="risk-matrix">
+                        <div class="risk-item risk-high">
+                            <h4>Risques Élevés</h4>
+                            <ul id="high-risks">
+                                <li>Concurrence intense</li>
+                                <li>Dépendance fournisseurs</li>
+                            </ul>
+                        </div>
+                        <div class="risk-item risk-medium">
+                            <h4>Risques Moyens</h4>
+                            <ul id="medium-risks">
+                                <li>Évolution réglementaire</li>
+                                <li>Fluctuation des prix</li>
+                            </ul>
+                        </div>
+                        <div class="risk-item risk-low">
+                            <h4>Risques Faibles</h4>
+                            <ul id="low-risks">
+                                <li>Stabilité de l'équipe</li>
+                                <li>Technologie maîtrisée</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Plan -->
+                <div class="action-plan">
+                    <h3><i class="fas fa-tasks"></i> Plan d'Action Recommandé</h3>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <h4>Phase 1 - Préparation (0-3 mois)</h4>
+                                <ul>
+                                    <li>Finaliser l'étude de marché</li>
+                                    <li>Constituer l'équipe fondatrice</li>
+                                    <li>Sécuriser les premiers financements</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <h4>Phase 2 - Lancement (3-12 mois)</h4>
+                                <ul>
+                                    <li>Développer le produit/service</li>
+                                    <li>Mettre en place la stratégie marketing</li>
+                                    <li>Acquérir les premiers clients</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <h4>Phase 3 - Croissance (12+ mois)</h4>
+                                <ul>
+                                    <li>Optimiser les processus</li>
+                                    <li>Étendre la gamme de produits</li>
+                                    <li>Lever des fonds pour la croissance</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <h3><i class="fas fa-bolt"></i> Actions Rapides</h3>
+                    <div class="action-buttons">
+                        <a href="business-plan-60-questions.html" class="action-btn">
+                            <i class="fas fa-list-alt"></i>
+                            <span>Compléter le Business Plan</span>
+                        </a>
+                        <a href="modele-financier.html" class="action-btn">
+                            <i class="fas fa-calculator"></i>
+                            <span>Calculer les Projections</span>
+                        </a>
+                        <button class="action-btn" onclick="generateReport()">
+                            <i class="fas fa-file-pdf"></i>
+                            <span>Générer le Rapport</span>
+                        </button>
+                        <button class="action-btn" onclick="exportData()">
+                            <i class="fas fa-download"></i>
+                            <span>Exporter les Données</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2024 Business Plan Online - Outil d'aide à la création d'entreprise</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html> 

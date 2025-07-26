@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modèle Financier - Business Plan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+        
+        .section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+        
+        .section-title {
+            font-size: 1.8em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3498db;
+        }
+        
+        .input-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .input-field {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .input-field label {
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+        
+        .input-field input, .input-field select {
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+        
+        .input-field input:focus, .input-field select:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        .table-responsive {
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: right;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        th {
+            background: #f8f9fa;
+            color: #2c3e50;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+        
+        th:first-child, td:first-child {
+            text-align: left;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .total-row {
+            font-weight: bold;
+            background: #e8f4f8;
+        }
+        
+        .calculate-btn {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+            margin: 30px auto;
+            box-shadow: 0 5px 20px rgba(52, 152, 219, 0.3);
+        }
+        
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(52, 152, 219, 0.4);
+        }
+        
+        .results-section {
+            display: none;
+        }
+        
+        .metric-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .metric-card {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .metric-card:hover {
+            transform: scale(1.05);
+        }
+        
+        .metric-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+        
+        .metric-value {
+            font-size: 2em;
+            font-weight: bold;
+        }
+        
+        .positive {
+            color: #27ae60;
+        }
+        
+        .negative {
+            color: #e74c3c;
+        }
+        
+        .chart-container {
+            height: 400px;
+            margin-top: 30px;
+        }
+        
+        .export-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .export-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .export-btn:hover {
+            background: #229954;
+            transform: translateY(-2px);
+        }
+        
+        .currency-symbol {
+            color: #3498db;
+            font-weight: bold;
+        }
+        
+        @media print {
+            .input-field input, .calculate-btn, .export-buttons {
+                display: none;
+            }
+            
+            .section {
+                break-inside: avoid;
+            }
+        }
+        
+        .info-box {
+            background: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .info-box h4 {
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .info-box p {
+            color: #555;
+            font-size: 0.9em;
+        }
+        
+        .back-btn {
+            background: #95a5a6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .back-btn:hover {
+            background: #7f8c8d;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Retour au Business Plan
+        </a>
+        
+        <div class="header">
+            <h1>Modèle Financier - Business Plan</h1>
+            <p>Outil complet de projection financière sur 5 ans (Multi-devises)</p>
+        </div>
+        
+        <!-- Section Paramètres Généraux -->
+        <div class="section">
+            <h2 class="section-title">📊 Paramètres Généraux</h2>
+            <div class="input-group">
+                <div class="input-field">
+                    <label>Nom de l'entreprise</label>
+                    <input type="text" id="companyName" placeholder="Ma Startup">
+                </div>
+                <div class="input-field">
+                    <label>Secteur d'activité</label>
+                    <select id="sector">
+                        <option value="saas">SaaS / Logiciel</option>
+                        <option value="ecommerce">E-commerce</option>
+                        <option value="service">Services</option>
+                        <option value="industrie">Industrie</option>
+                        <option value="autre">Autre</option>
+                    </select>
+                </div>
+                <div class="input-field">
+                    <label>Année de début</label>
+                    <input type="number" id="startYear" value="2024" min="2024" max="2030">
+                </div>
+                <div class="input-field">
+                    <label>Devise</label>
+                    <select id="currency" onchange="updateCurrency()">
+                        <option value="EUR">Euro (€)</option>
+                        <option value="XOF">Franc CFA (FCFA)</option>
+                        <option value="USD">Dollar US ($)</option>
+                    </select>
+                </div>
+                <div class="input-field">
+                    <label>Capital initial <span class="currency-symbol">(€)</span></label>
+                    <input type="number" id="initialCapital" value="50000" min="0">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Section Chiffre d'Affaires -->
+        <div class="section">
+            <h2 class="section-title">💰 Projections de Chiffre d'Affaires</h2>
+            
+            <div class="info-box">
+                <h4>Comment projeter votre CA ?</h4>
+                <p>Basez-vous sur : prix moyen × nombre de clients × fréquence d'achat</p>
+            </div>
+            
+            <div class="input-group">
+                <div class="input-field">
+                    <label>CA Année 1 <span class="currency-symbol">(€)</span></label>
+                    <input type="number" id="revenue1" value="150000" min="0">
+                </div>
+                <div class="input-field">
+                    <label>Croissance annuelle (%)</label>
+                    <input type="number" id="growthRate" value="30" min="0" max="200">
+                </div>
+            </div>
+            
+            <h3 style="margin-top: 30px; color: #2c3e50;">Détail des revenus</h3>
+            <div class="input-group">
+                <div class="input-field">
+                    <label>Prix moyen par client <span class="currency-symbol">(€)</span></label>
+                    <input type="number" id="avgPrice" value="150" min="0">
+                </div>
+                <div class="input-field">
+                    <label>Nombre de clients année 1</label>
+                    <input type="number" id="customersYear1" value="1000" min="0">
+                </div>
+                <div class="input-field">
+                    <label>Taux de récurrence (%)</label>
+                    <input type="number" id="recurrenceRate" value="80" min="0" max="100">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Section Charges -->
+        <div class="section">
+            <h2 class="section-title">📉 Structure des Charges</h2>
+            
+            <h3 style="color: #2c3e50; margin-bottom: 15px;">Charges Variables (% du CA)</h3>
+            <div class="input-group">
+                <div class="input-field">
+                    <label>Coût des marchandises vendues (%)</label>
+                    <input type="number" id="cogs" value="30" min="0" max="100">
+                </div>
+                <div class="input-field">
+                    <label>Commissions commerciales (%)</label>
+                    <input type="number" id="commissions" value="5" min="0" max="100">
+                </div>
+                <div class="input-field">
+                    <label>Frais de livraison (%)</label>
+                    <input type="number" id="shipping" value="3" min="0" max="100">
+                </div>
+            </div>
+            
+            <h3 style="color: #2c3e50; margin: 25px 0 15px;">Charges Fixes Annuelles <span class="currency-symbol">(€)</span></h3>
+            <div class="input-group">
+                <div class="input-field">
+                    <label>Salaires et charges</label>
+                    <input type="number" id="salaries" value="60000" min="0">
+                </div>
+                <div class="input-field">
+                    <label>Loyer et charges locatives</label>
+                    <input type="number" id="rent" value="18000" min="0">
+                </div>
+                <div class="input-field">
+                    <label>Marketing et publicité</label>
+                    <input type="number" id="marketing" value="15000" min="0">
+                </div>
+                <div class="input-field">
+                    <label>Frais administratifs</label>
+                    <input type="number" id="admin" value="8000" min="0">
+                </div>
+                <div class="input-field">
+                    <label>Assurances</label>
+                    <input type="number" id="insurance" value="3000" min="0">
+                </div>
+                <div class="input-field">
+                    <label>Autres charges fixes</label>
+                    <input type="number" id="otherFixed" value="5000" min="0">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Section Financement -->
+        <div class="section">
+            <h2 class="section-title">🏦 Plan de Financement</h2>
+            <div class="input-group">
+                <div class="input-field">
+                    <label>Levée de fonds Année 1 <span class="currency-symbol">(€)</span></label>
+                    <input type="number" id="funding1" value="200000" min="0">
+                </div>
+                <div class="input-field">
+                    <label>Levée de fonds Année 3 <span class="currency-symbol">(€)</span></label>
+                    <input type="number" id="funding3" value="500000" min="0">
+                </div>
+                <div class="input-field">
+                    <label>Emprunt bancaire <span class="currency-symbol">(€)</span></label>
+                    <input type="number" id="loan" value="100000" min="0">
+                </div>
+                <div class="input-field">
+                    <label>Taux d'intérêt (%)</label>
+                    <input type="number" id="interestRate" value="4" min="0" max="20" step="0.1">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Section Investissements et Amortissements -->
+        <div class="section">
+            <h2 class="section-title">🏭 Investissements et Amortissements</h2>
+            <div class="input-group">
+                <div class="input-field">
+                    <label>Investissements Année 1 <span class="currency-symbol">(€)</span></label>
+                    <input type="number" id="investment1" value="50000" min="0">
+                </div>
+                <div class="input-field">
+                    <label>Investissements Année 2 <span class="currency-symbol">(€)</span></label>
+                    <input type="number" id="investment2" value="30000" min="0">
+                </div>
+                <div class="input-field">
+                    <label>Investissements Année 3 <span class="currency-symbol">(€)</span></label>
+                    <input type="number" id="investment3" value="40000" min="0">
+                </div>
+                <div class="input-field">
+                    <label>Durée d'amortissement (années)</label>
+                    <input type="number" id="depreciationYears" value="5" min="1" max="10">
+                </div>
+                <div class="input-field">
+                    <label>Taux d'actualisation (%)</label>
+                    <input type="number" id="discountRate" value="10" min="0" max="30" step="0.1">
+                </div>
+                <div class="input-field">
+                    <label>Taux d'IS (%)</label>
+                    <input type="number" id="taxRate" value="30" min="0" max="50">
+                </div>
+            </div>
+        </div>
+        
+        <button class="calculate-btn" onclick="calculateFinancials()">
+            📊 Calculer les Projections Financières
+        </button>
+        
+        <!-- Section Résultats -->
+        <div class="results-section" id="results">
+            <div class="section">
+                <h2 class="section-title">📈 Indicateurs Clés de Performance</h2>
+                <div class="metric-cards">
+                    <div class="metric-card">
+                        <div class="metric-label">CA Total 5 ans</div>
+                        <div class="metric-value" id="totalRevenue">0</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Marge Brute Moyenne</div>
+                        <div class="metric-value" id="avgGrossMargin">0%</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Point Mort</div>
+                        <div class="metric-value" id="breakeven">Année X</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">ROI 5 ans</div>
+                        <div class="metric-value" id="roi">0%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">📊 Compte d'Exploitation Prévisionnel</h2>
+                <div class="table-responsive">
+                    <table id="exploitationStatement">
+                        <!-- Table will be populated by JavaScript -->
+                    </table>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">💸 Tableau des Flux de Trésorerie</h2>
+                <div class="table-responsive">
+                    <table id="cashFlowStatement">
+                        <!-- Table will be populated by JavaScript -->
+                    </table>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">📊 Ratios Financiers</h2>
+                <div class="table-responsive">
+                    <table id="financialRatios">
+                        <!-- Table will be populated by JavaScript -->
+                    </table>
+                </div>
+            </div>
+            
+            <div class="export-buttons">
+                <button class="export-btn" onclick="exportToExcel()">📊 Exporter Excel</button>
+                <button class="export-btn" onclick="window.print()">🖨️ Imprimer</button>
+                <button class="export-btn" onclick="saveAsJSON()">💾 Sauvegarder</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Configuration des devises
+        const currencyConfig = {
+            EUR: { symbol: '€', name: 'Euro', rate: 1 },
+            XOF: { symbol: 'FCFA', name: 'Franc CFA', rate: 655.957 },
+            USD: { symbol: '$', name: 'Dollar US', rate: 0.92 }
+        };
+        
+        let currentCurrency = 'EUR';
+        
+        function updateCurrency() {
+            const currency = document.getElementById('currency').value;
+            currentCurrency = currency;
+            
+            // Mettre à jour tous les symboles de devise
+            document.querySelectorAll('.currency-symbol').forEach(elem => {
+                elem.textContent = `(${currencyConfig[currency].symbol})`;
+            });
+        }
+        
+        function formatCurrency(amount) {
+            const config = currencyConfig[currentCurrency];
+            
+            if (currentCurrency === 'XOF') {
+                return new Intl.NumberFormat('fr-FR', {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                }).format(amount) + ' FCFA';
+            } else if (currentCurrency === 'USD') {
+                return new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                }).format(amount);
+            } else {
+                return new Intl.NumberFormat('fr-FR', {
+                    style: 'currency',
+                    currency: 'EUR',
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                }).format(amount);
+            }
+        }
+        
+        function formatPercent(value) {
+            return `${value.toFixed(1)}%`;
+        }
+        
+        function calculateFinancials() {
+            // Récupération des valeurs
+            const revenue1 = parseFloat(document.getElementById('revenue1').value) || 0;
+            const growthRate = parseFloat(document.getElementById('growthRate').value) / 100 || 0;
+            const cogsRate = parseFloat(document.getElementById('cogs').value) / 100 || 0;
+            const commissionsRate = parseFloat(document.getElementById('commissions').value) / 100 || 0;
+            const shippingRate = parseFloat(document.getElementById('shipping').value) / 100 || 0;
+            
+            const salaries = parseFloat(document.getElementById('salaries').value) || 0;
+            const rent = parseFloat(document.getElementById('rent').value) || 0;
+            const marketing = parseFloat(document.getElementById('marketing').value) || 0;
+            const admin = parseFloat(document.getElementById('admin').value) || 0;
+            const insurance = parseFloat(document.getElementById('insurance').value) || 0;
+            const otherFixed = parseFloat(document.getElementById('otherFixed').value) || 0;
+            
+            const initialCapital = parseFloat(document.getElementById('initialCapital').value) || 0;
+            const funding1 = parseFloat(document.getElementById('funding1').value) || 0;
+            const funding3 = parseFloat(document.getElementById('funding3').value) || 0;
+            const loan = parseFloat(document.getElementById('loan').value) || 0;
+            const interestRate = parseFloat(document.getElementById('interestRate').value) / 100 || 0;
+            
+            const investment1 = parseFloat(document.getElementById('investment1').value) || 0;
+            const investment2 = parseFloat(document.getElementById('investment2').value) || 0;
+            const investment3 = parseFloat(document.getElementById('investment3').value) || 0;
+            const depreciationYears = parseFloat(document.getElementById('depreciationYears').value) || 5;
+            const discountRate = parseFloat(document.getElementById('discountRate').value) / 100 || 0;
+            const taxRate = parseFloat(document.getElementById('taxRate').value) / 100 || 0;
+            
+            // Calcul des projections sur 5 ans
+            const years = 5;
+            const revenues = [];
+            const variableCosts = [];
+            const grossMargin = [];
+            const fixedCosts = [];
+            const ebitda = [];
+            const depreciation = [];
+            const ebit = [];
+            const interestExpenses = [];
+            const ebt = [];
+            const taxes = [];
+            const netIncome = [];
+            const cashFlow = [];
+            const investments = [investment1, investment2, investment3, 0, 0];
+            const npvFactors = [];
+            const discountedCashFlow = [];
+            
+            // Calcul des amortissements cumulés
+            const depreciationSchedule = Array(years).fill(0);
+            for (let i = 0; i < years; i++) {
+                for (let j = 0; j <= i && j < 3; j++) {
+                    if (i - j < depreciationYears) {
+                        depreciationSchedule[i] += investments[j] / depreciationYears;
+                    }
+                }
+            }
+            
+            let cumulativeCash = initialCapital + funding1 + loan;
+            
+            for (let i = 0; i < years; i++) {
+                // Chiffre d'affaires
+                revenues[i] = i === 0 ? revenue1 : revenues[i-1] * (1 + growthRate);
+                
+                // Charges variables
+                variableCosts[i] = revenues[i] * (cogsRate + commissionsRate + shippingRate);
+                
+                // Marge brute
+                grossMargin[i] = revenues[i] - variableCosts[i];
+                
+                // Charges fixes (avec augmentation de 3% par an)
+                fixedCosts[i] = (salaries + rent + marketing + admin + insurance + otherFixed) * Math.pow(1.03, i);
+                
+                // EBITDA (EBE)
+                ebitda[i] = grossMargin[i] - fixedCosts[i];
+                
+                // Amortissements
+                depreciation[i] = depreciationSchedule[i];
+                
+                // EBIT (Résultat d'exploitation)
+                ebit[i] = ebitda[i] - depreciation[i];
+                
+                // Intérêts
+                interestExpenses[i] = loan * interestRate * Math.max(0, 5 - i) / 5;
+                
+                // EBT (Résultat avant impôt)
+                ebt[i] = ebit[i] - interestExpenses[i];
+                
+                // Impôts
+                taxes[i] = Math.max(0, ebt[i] * taxRate);
+                
+                // Résultat net
+                netIncome[i] = ebt[i] - taxes[i];
+                
+                // CAFG (Capacité d'autofinancement globale)
+                const cafg = netIncome[i] + depreciation[i];
+                
+                // Cash Flow
+                const fundingYear = i === 2 ? funding3 : 0;
+                cashFlow[i] = cafg - investments[i] + fundingYear;
+                
+                // Facteur d'actualisation et flux actualisés
+                npvFactors[i] = 1 / Math.pow(1 + discountRate, i + 1);
+                discountedCashFlow[i] = cashFlow[i] * npvFactors[i];
+                
+                cumulativeCash += cashFlow[i];
+            }
+            
+            // Calcul des KPIs
+            const totalRevenue = revenues.reduce((a, b) => a + b, 0);
+            const avgGrossMarginRate = grossMargin.map((m, i) => m / revenues[i]).reduce((a, b) => a + b, 0) / years * 100;
+            const avgEbitdaMargin = ebitda.map((e, i) => e / revenues[i]).reduce((a, b) => a + b, 0) / years * 100;
+            const breakevenYear = netIncome.findIndex(n => n > 0) + 1;
+            const totalInvestment = initialCapital + funding1 + funding3 + loan;
+            const totalReturn = netIncome.reduce((a, b) => a + b, 0);
+            const roi = (totalReturn / totalInvestment) * 100;
+            const npv = discountedCashFlow.reduce((a, b) => a + b, 0) - initialCapital;
+            
+            // Affichage des KPIs
+            document.getElementById('totalRevenue').textContent = formatCurrency(totalRevenue);
+            document.getElementById('avgGrossMargin').textContent = formatPercent(avgGrossMarginRate);
+            document.getElementById('breakeven').textContent = breakevenYear > 0 ? `Année ${breakevenYear}` : 'Non atteint';
+            document.getElementById('roi').textContent = formatPercent(roi);
+            
+            // Génération du compte d'exploitation prévisionnel
+            const exploitationTable = document.getElementById('exploitationStatement');
+            exploitationTable.innerHTML = `
+                <thead>
+                    <tr>
+                        <th>Éléments</th>
+                        ${Array.from({length: years}, (_, i) => `<th>Année ${i + 1}</th>`).join('')}
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Chiffre d'affaires</strong></td>
+                        ${revenues.map(r => `<td><strong>${formatCurrency(r)}</strong></td>`).join('')}
+                    </tr>
+                    <tr>
+                        <td>Charges variables</td>
+                        ${variableCosts.map(c => `<td>${formatCurrency(c)}</td>`).join('')}
+                    </tr>
+                    <tr class="total-row">
+                        <td><strong>Marge Brute</strong></td>
+                        ${grossMargin.map(m => `<td><strong>${formatCurrency(m)}</strong></td>`).join('')}
+                    </tr>
+                    <tr>
+                        <td><em>Marge/CA (%)</em></td>
+                        ${grossMargin.map((m, i) => `<td><em>${formatPercent(m/revenues[i]*100)}</em></td>`).join('')}
+                    </tr>
+                    <tr>
+                        <td>Autres charges d'exploitation</td>
+                        ${fixedCosts.map(c => `<td>${formatCurrency(c)}</td>`).join('')}
+                    </tr>
+                    <tr class="total-row">
+                        <td><strong>EBE (EBITDA)</strong></td>
+                        ${ebitda.map(e => `<td class="${e >= 0 ? 'positive' : 'negative'}"><strong>${formatCurrency(e)}</strong></td>`).join('')}
+                    </tr>
+                    <tr>
+                        <td><em>EBE/CA (%)</em></td>
+                        ${ebitda.map((e, i) => `<td><em>${formatPercent(e/revenues[i]*100)}</em></td>`).join('')}
+                    </tr>
+                    <tr>
+                        <td>Amortissements</td>
+                        ${depreciation.map(d => `<td>${formatCurrency(d)}</td>`).join('')}
+                    </tr>
+                    <tr class="total-row">
+                        <td><strong>Résultat d'Exploitation (EBIT)</strong></td>
+                        ${ebit.map(e => `<td class="${e >= 0 ? 'positive' : 'negative'}"><strong>${formatCurrency(e)}</strong></td>`).join('')}
+                    </tr>
+                    <tr>
+                        <td><em>EBIT/CA (%)</em></td>
+                        ${ebit.map((e, i) => `<td><em>${formatPercent(e/revenues[i]*100)}</em></td>`).join('')}
+                    </tr>
+                    <tr>
+                        <td>Charges d'intérêt</td>
+                        ${interestExpenses.map(i => `<td>${formatCurrency(i)}</td>`).join('')}
+                    </tr>
+                    <tr>
+                        <td>Résultat avant IS</td>
+                        ${ebt.map(e => `<td class="${e >= 0 ? 'positive' : 'negative'}">${formatCurrency(e)}</td>`).join('')}
+                    </tr>
+                    <tr>
+                        <td>IS (${(taxRate*100).toFixed(0)}%)</td>
+                        ${taxes.map(t => `<td>${formatCurrency(t)}</td>`).join('')}
+                    </tr>
+                    <tr class="total-row">
+                        <td><strong>Résultat Net</strong></td>
+                        ${netIncome.map(n => `<td class="${n >= 0 ? 'positive' : 'negative'}"><strong>${formatCurrency(n)}</strong></td>`).join('')}
+                    </tr>
+                    <tr>
+                        <td><em>RN/CA (%)</em></td>
+                        ${netIncome.map((n, i) => `<td><em>${formatPercent(n/revenues[i]*100)}</em></td>`).join('')}
+                    </tr>
+                </tbody>
+            `;
+            
+            // Génération du tableau des flux de trésorerie
+            const cashFlowTable = document.getElementById('cashFlowStatement');
+            cashFlowTable.innerHTML = `
+                <thead>
+                    <tr>
+                        <th>Éléments</th>
+                        ${Array.from({length: years}, (_, i) => `<th>Année ${i + 1}</th>`).join('')}
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Résultat Net</td>
+                        ${netIncome.map(n => `<td>${formatCurrency(n)}</td>`).join('')}
+                    </tr>
+                    <tr>
+                        <td>+ Amortissements</td>
+                        ${depreciation.map(d => `<td>${formatCurrency(d)}</td>`).join('')}
+                    </tr>
+                    <tr class="total-row">
+                        <td><strong>CAFG</strong></td>
+                        ${netIncome.map((n, i) => `<td><strong>${formatCurrency(n + depreciation[i])}</strong></td>`).join('')}
+                    </tr>
+                    <tr>
+                        <td>- Investissements</td>
+                        ${investments.map(i => `<td>${formatCurrency(-i)}</td>`).join('')}
+                    </tr>
+                    <tr>
+                        <td>+ Levées de fonds</td>
+                        ${Array.from({length: years}, (_, i) => `<td>${formatCurrency(i === 0 ? funding1 : i === 2 ? funding3 : 0)}</td>`).join('')}
+                    </tr>
+                    <tr class="total-row">
+                        <td><strong>Cash Flow</strong></td>
+                        ${cashFlow.map(c => `<td class="${c >= 0 ? 'positive' : 'negative'}"><strong>${formatCurrency(c)}</strong></td>`).join('')}
+                    </tr>
+                    <tr>
+                        <td>Flux actualisés (${(discountRate*100).toFixed(0)}%)</td>
+                        ${discountedCashFlow.map(d => `<td>${formatCurrency(d)}</td>`).join('')}
+                    </tr>
+                    <tr class="total-row">
+                        <td><strong>VAN du projet</strong></td>
+                        <td colspan="${years}"><strong>${formatCurrency(npv)}</strong></td>
+                    </tr>
+                </tbody>
+            `;
+            
+            // Génération du tableau des ratios
+            const ratiosTable = document.getElementById('financialRatios');
+            ratiosTable.innerHTML = `
+                <thead>
+                    <tr>
+                        <th>Ratios Clés</th>
+                        ${Array.from({length: years}, (_, i) => `<th>Année ${i + 1}</th>`).join('')}
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Marge Brute (%)</td>
+                        ${grossMargin.map((m, i) => `<td>${formatPercent(m/revenues[i]*100)}</td>`).join('')}
+                    </tr>
+                    <tr>
+                        <td>Marge EBITDA (%)</td>
+                        ${ebitda.map((e, i) => `<td>${formatPercent(e/revenues[i]*100)}</td>`).join('')}
+                    </tr>
+                    <tr>
+                        <td>Marge EBIT (%)</td>
+                        ${ebit.map((e, i) => `<td>${formatPercent(e/revenues[i]*100)}</td>`).join('')}
+                    </tr>
+                    <tr>
+                        <td>Marge Nette (%)</td>
+                        ${netIncome.map((n, i) => `<td>${formatPercent(n/revenues[i]*100)}</td>`).join('')}
+                    </tr>
+                </tbody>
+            `;
+            
+            // Afficher les résultats
+            document.getElementById('results').style.display = 'block';
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function exportToExcel() {
+            alert('Fonctionnalité d\'export Excel à implémenter avec une bibliothèque comme SheetJS');
+        }
+        
+        function saveAsJSON() {
+            const data = {
+                parameters: {
+                    companyName: document.getElementById('companyName').value,
+                    sector: document.getElementById('sector').value,
+                    currency: document.getElementById('currency').value,
+                    revenue1: document.getElementById('revenue1').value,
+                    growthRate: document.getElementById('growthRate').value,
+                    // ... autres paramètres
+                },
+                timestamp: new Date().toISOString()
+            };
+            
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `business-plan-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+        }
+        
+        // Calcul automatique lors de la modification des valeurs
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('change', () => {
+                const resultsSection = document.getElementById('results');
+                if (resultsSection.style.display === 'block') {
+                    calculateFinancials();
+                }
+            });
+        });
+    </script>
+    <script src="financial-calculator.js"></script>
+</body>
+</html> 
