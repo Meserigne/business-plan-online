@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panneau d'Administration - Business Plan Online</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="admin-panel.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Header Admin -->
+        <header class="admin-header">
+            <div class="admin-logo">
+                <i class="fas fa-shield-alt"></i>
+                <h1>Administration</h1>
+            </div>
+            <div class="admin-nav">
+                <a href="index.html" class="admin-nav-link">
+                    <i class="fas fa-home"></i> Retour au site
+                </a>
+                <button id="adminLogoutBtn" class="admin-logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Déconnexion
+                </button>
+            </div>
+        </header>
+
+        <!-- Login Admin -->
+        <div id="adminLogin" class="admin-login">
+            <div class="admin-login-card">
+                <div class="admin-login-header">
+                    <i class="fas fa-lock"></i>
+                    <h2>Accès Administrateur</h2>
+                    <p>Connectez-vous pour accéder au panneau d'administration</p>
+                </div>
+                <form id="adminLoginForm">
+                    <div class="form-group">
+                        <label for="adminUsername">Nom d'utilisateur</label>
+                        <input type="text" id="adminUsername" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="adminPassword">Mot de passe</label>
+                        <input type="password" id="adminPassword" required>
+                    </div>
+                    <button type="submit" class="admin-login-btn">
+                        <i class="fas fa-sign-in-alt"></i> Se connecter
+                    </button>
+                </form>
+                <div class="admin-credentials">
+                    <small><strong>Identifiants par défaut :</strong></small><br>
+                    <small>Utilisateur: <code>admin</code></small><br>
+                    <small>Mot de passe: <code>admin123</code></small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Admin -->
+        <div id="adminDashboard" class="admin-dashboard" style="display: none;">
+            <!-- Statistiques -->
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalUsers">0</h3>
+                        <p>Utilisateurs inscrits</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalBusinessPlans">0</h3>
+                        <p>Business Plans créés</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="activeToday">0</h3>
+                        <p>Actifs aujourd'hui</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalExports">0</h3>
+                        <p>Exports générés</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Onglets -->
+            <div class="admin-tabs">
+                <button class="admin-tab active" data-tab="users">
+                    <i class="fas fa-users"></i> Utilisateurs
+                </button>
+                <button class="admin-tab" data-tab="data">
+                    <i class="fas fa-database"></i> Données
+                </button>
+                <button class="admin-tab" data-tab="analytics">
+                    <i class="fas fa-chart-bar"></i> Analytics
+                </button>
+                <button class="admin-tab" data-tab="settings">
+                    <i class="fas fa-cog"></i> Paramètres
+                </button>
+            </div>
+
+            <!-- Contenu des onglets -->
+            <div class="admin-content">
+                <!-- Onglet Utilisateurs -->
+                <div id="usersTab" class="admin-tab-content active">
+                    <div class="admin-section-header">
+                        <h2>Gestion des Utilisateurs</h2>
+                        <div class="admin-actions">
+                            <button id="exportUsersBtn" class="admin-btn admin-btn-secondary">
+                                <i class="fas fa-download"></i> Exporter
+                            </button>
+                            <button id="addUserBtn" class="admin-btn admin-btn-primary">
+                                <i class="fas fa-plus"></i> Ajouter
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="admin-search">
+                        <input type="text" id="userSearch" placeholder="Rechercher un utilisateur...">
+                        <i class="fas fa-search"></i>
+                    </div>
+
+                    <div class="admin-table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nom</th>
+                                    <th>Email</th>
+                                    <th>Entreprise</th>
+                                    <th>Inscription</th>
+                                    <th>Dernière connexion</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody">
+                                <!-- Les utilisateurs seront chargés ici -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Onglet Données -->
+                <div id="dataTab" class="admin-tab-content">
+                    <div class="admin-section-header">
+                        <h2>Gestion des Données</h2>
+                        <div class="admin-actions">
+                            <button id="backupDataBtn" class="admin-btn admin-btn-secondary">
+                                <i class="fas fa-save"></i> Sauvegarder
+                            </button>
+                            <button id="clearDataBtn" class="admin-btn admin-btn-danger">
+                                <i class="fas fa-trash"></i> Nettoyer
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="data-overview">
+                        <div class="data-card">
+                            <h3>Business Plans</h3>
+                            <p id="businessPlansCount">0 business plans stockés</p>
+                            <button class="data-action-btn" onclick="viewBusinessPlans()">Voir détails</button>
+                        </div>
+                        <div class="data-card">
+                            <h3>Données Financières</h3>
+                            <p id="financialDataCount">0 modèles financiers</p>
+                            <button class="data-action-btn" onclick="viewFinancialData()">Voir détails</button>
+                        </div>
+                        <div class="data-card">
+                            <h3>Analyses SWOT</h3>
+                            <p id="swotAnalysisCount">0 analyses SWOT</p>
+                            <button class="data-action-btn" onclick="viewSWOTData()">Voir détails</button>
+                        </div>
+                        <div class="data-card">
+                            <h3>Scénarios</h3>
+                            <p id="scenariosCount">0 scénarios sauvegardés</p>
+                            <button class="data-action-btn" onclick="viewScenarios()">Voir détails</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Onglet Analytics -->
+                <div id="analyticsTab" class="admin-tab-content">
+                    <div class="admin-section-header">
+                        <h2>Analytics et Statistiques</h2>
+                    </div>
+
+                    <div class="analytics-grid">
+                        <div class="analytics-card">
+                            <h3>Utilisation par jour</h3>
+                            <canvas id="dailyUsageChart" width="400" height="200"></canvas>
+                        </div>
+                        <div class="analytics-card">
+                            <h3>Templates populaires</h3>
+                            <canvas id="templatesChart" width="400" height="200"></canvas>
+                        </div>
+                        <div class="analytics-card">
+                            <h3>Exports par format</h3>
+                            <canvas id="exportsChart" width="400" height="200"></canvas>
+                        </div>
+                        <div class="analytics-card">
+                            <h3>Taux de complétion</h3>
+                            <div class="completion-stats">
+                                <div class="completion-item">
+                                    <span>Business Plan complet</span>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 65%"></div>
+                                    </div>
+                                    <span>65%</span>
+                                </div>
+                                <div class="completion-item">
+                                    <span>Modèle financier</span>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 78%"></div>
+                                    </div>
+                                    <span>78%</span>
+                                </div>
+                                <div class="completion-item">
+                                    <span>Analyse SWOT</span>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 45%"></div>
+                                    </div>
+                                    <span>45%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Onglet Paramètres -->
+                <div id="settingsTab" class="admin-tab-content">
+                    <div class="admin-section-header">
+                        <h2>Paramètres Système</h2>
+                    </div>
+
+                    <div class="settings-grid">
+                        <div class="settings-card">
+                            <h3>Sécurité</h3>
+                            <div class="setting-item">
+                                <label>Changer mot de passe admin</label>
+                                <button class="setting-btn">Modifier</button>
+                            </div>
+                            <div class="setting-item">
+                                <label>Sessions utilisateurs</label>
+                                <button class="setting-btn">Gérer</button>
+                            </div>
+                        </div>
+                        <div class="settings-card">
+                            <h3>Maintenance</h3>
+                            <div class="setting-item">
+                                <label>Nettoyer données anciennes</label>
+                                <button class="setting-btn">Nettoyer</button>
+                            </div>
+                            <div class="setting-item">
+                                <label>Optimiser stockage</label>
+                                <button class="setting-btn">Optimiser</button>
+                            </div>
+                        </div>
+                        <div class="settings-card">
+                            <h3>Système</h3>
+                            <div class="setting-item">
+                                <label>Version de l'application</label>
+                                <span class="setting-value">v2.0.0</span>
+                            </div>
+                            <div class="setting-item">
+                                <label>Dernière mise à jour</label>
+                                <span class="setting-value" id="lastUpdate">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin-panel.js"></script>
+</body>
+</html>

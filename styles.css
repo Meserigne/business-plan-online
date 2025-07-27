@@ -6,30 +6,32 @@
 
 body {
     font-family: 'Inter', sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #ffffff;
     min-height: 100vh;
     color: #333;
     line-height: 1.6;
 }
 
 .container {
-    max-width: 800px;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 30px;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    width: 95%;
 }
 
 /* Header */
 .header {
     text-align: center;
-    margin-bottom: 40px;
-    background: rgba(255, 255, 255, 0.95);
-    padding: 30px;
+    margin: 0 auto 40px auto;
+    background: #ffffff;
+    padding: 40px;
     border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    border: 1px solid #f0f0f0;
+    max-width: 800px;
 }
 
 .logo {
@@ -81,10 +83,11 @@ body {
 
 /* Tools Menu */
 .tools-menu {
-    margin-top: 20px;
+    margin-top: 30px;
     display: flex;
     justify-content: center;
-    gap: 15px;
+    gap: 20px;
+    flex-wrap: wrap;
 }
 
 .tool-link {
@@ -113,6 +116,33 @@ body {
     font-size: 1.1rem;
 }
 
+/* Lien Administration */
+.admin-link {
+    background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(192, 57, 43, 0.1)) !important;
+    border: 1px solid rgba(231, 76, 60, 0.3);
+    position: relative;
+    color: #e74c3c !important;
+}
+
+.admin-link:hover {
+    background: linear-gradient(135deg, rgba(231, 76, 60, 0.2), rgba(192, 57, 43, 0.2)) !important;
+    border-color: rgba(231, 76, 60, 0.5);
+    box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4) !important;
+}
+
+.admin-link i {
+    color: #e74c3c !important;
+}
+
+.admin-link::after {
+    content: "🔒";
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    font-size: 12px;
+    opacity: 0.7;
+}
+
 /* Progress Bar */
 .progress-bar {
     width: 100%;
@@ -133,12 +163,12 @@ body {
 
 /* Main Content */
 .main-content {
-    background: rgba(255, 255, 255, 0.95);
+    background: #ffffff;
     border-radius: 20px;
-    padding: 40px;
+    padding: 50px;
     margin-bottom: 30px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e9ecef;
     flex: 1;
 }
 
@@ -148,7 +178,7 @@ body {
 }
 
 #step-counter {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #2c3e50;
     color: white;
     padding: 8px 20px;
     border-radius: 25px;
@@ -259,7 +289,7 @@ select.input {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #2c3e50;
     color: white;
 }
 
@@ -371,26 +401,47 @@ select.input {
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+    .container {
+        max-width: 95%;
+        padding: 25px;
+        width: 95%;
+    }
+}
+
 @media (max-width: 768px) {
     .container {
+        max-width: 100%;
         padding: 15px;
     }
     
     .header {
-        padding: 20px;
+        padding: 25px;
+        margin-bottom: 30px;
+    }
+    
+    .main-content {
+        padding: 25px;
+    }
+    
+    .logo i {
+        font-size: 2rem;
     }
     
     .header h1 {
         font-size: 2rem;
     }
     
-    .logo {
+    .tools-menu {
         flex-direction: column;
-        gap: 10px;
+        align-items: center;
+        gap: 15px;
     }
     
-    .main-content, .summary-section {
-        padding: 25px;
+    .tool-link {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
     }
     
     .step-header h2 {
